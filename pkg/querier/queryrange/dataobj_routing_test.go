@@ -76,7 +76,7 @@ func TestDataObjResolve(t *testing.T) {
 	})
 
 	t.Run("rejects a sum of an aggregation that stream-first order does not support", func(t *testing.T) {
-		res := resolve(dataObjTenantLimits("1"), []string{"1"}, `sum(rate({app="a"}[1m]))`, insideStart, insideEnd)
+		res := resolve(dataObjTenantLimits("1"), []string{"1"}, `sum(avg_over_time({app="a"} | logfmt | unwrap n [1m]))`, insideStart, insideEnd)
 
 		require.Equal(t, DataObjOutcomeUnsupportedQuery, res.Outcome)
 	})
